@@ -1,0 +1,10 @@
+User-agent: *
+Allow: /
+
+# Block legal pages from indexing (already set via meta robots noindex)
+Disallow: /privacy-policy.html
+Disallow: /terms.html
+Disallow: /disclaimer.html
+Disallow: /404.html
+
+Sitemap: https://www.mehtacostaudit.in/sitemap.xml
