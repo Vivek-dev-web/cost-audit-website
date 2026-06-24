@@ -1,5 +1,5 @@
 /* =====================================================
-   Mehta & Associates – Main JavaScript
+   Sharmaji & Associates – Main JavaScript
    ===================================================== */
 
 'use strict';

@@ -29,3 +29,5 @@ build/
 # Secrets / env
 .env
 .env.local
+
+.vercel
