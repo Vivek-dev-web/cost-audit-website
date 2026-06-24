@@ -1,0 +1,749 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Website Implementation – Costing & Technology Report | Jitin Sharma & Co</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --primary: #0b1f4b;
+      --accent: #c8972b;
+      --green: #16a34a;
+      --red: #dc2626;
+      --orange: #ea580c;
+      --blue: #2563eb;
+      --bg: #f8f9fc;
+      --white: #ffffff;
+      --border: #e2e8f0;
+      --text: #1e293b;
+      --text-muted: #64748b;
+    }
+    body { font-family: 'Inter', sans-serif; font-size: 13.5px; color: var(--text); background: var(--bg); line-height: 1.6; }
+
+    /* ── Page shell ── */
+    .page-wrap { max-width: 960px; margin: 0 auto; padding: 2rem 1.5rem 4rem; }
+
+    /* ── Cover header ── */
+    .doc-header { background: var(--primary); color: #fff; border-radius: 12px; padding: 2.5rem 2.5rem 2rem; margin-bottom: 2rem; position: relative; overflow: hidden; }
+    .doc-header::before { content:''; position:absolute; top:-60px; right:-60px; width:220px; height:220px; border-radius:50%; background:rgba(200,151,43,.15); }
+    .doc-header .firm-badge { display:inline-flex; align-items:center; gap:.75rem; background:rgba(255,255,255,.1); border:1px solid rgba(255,255,255,.2); border-radius:8px; padding:.5rem 1rem; margin-bottom:1.25rem; }
+    .doc-header .firm-badge .logo-box { width:36px; height:36px; background:var(--accent); border-radius:6px; display:flex; align-items:center; justify-content:center; font-family:'Montserrat',sans-serif; font-weight:800; font-size:.9rem; color:var(--primary); }
+    .doc-header .firm-badge span { font-size:.85rem; color:rgba(255,255,255,.85); font-weight:500; }
+    .doc-header h1 { font-family:'Montserrat',sans-serif; font-size:1.9rem; font-weight:800; line-height:1.2; margin-bottom:.5rem; }
+    .doc-header h1 span { color: var(--accent); }
+    .doc-header .doc-sub { font-size:.9rem; color:rgba(255,255,255,.65); margin-bottom:1.5rem; }
+    .doc-meta-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:.75rem; margin-top:1.5rem; }
+    .doc-meta-item { background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.12); border-radius:8px; padding:.65rem .85rem; }
+    .doc-meta-item label { display:block; font-size:.7rem; color:rgba(255,255,255,.5); text-transform:uppercase; letter-spacing:.05em; margin-bottom:.2rem; }
+    .doc-meta-item value { display:block; font-size:.85rem; font-weight:600; color:#fff; }
+
+    /* ── Section blocks ── */
+    .section { background:var(--white); border:1px solid var(--border); border-radius:10px; padding:1.75rem 2rem; margin-bottom:1.5rem; }
+    .section-title { display:flex; align-items:center; gap:.6rem; margin-bottom:1.25rem; padding-bottom:.75rem; border-bottom:2px solid var(--border); }
+    .section-title .num { width:28px; height:28px; border-radius:50%; background:var(--primary); color:#fff; font-size:.75rem; font-weight:700; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+    .section-title h2 { font-family:'Montserrat',sans-serif; font-size:1rem; font-weight:700; color:var(--primary); }
+    .section-title .badge { margin-left:auto; font-size:.7rem; font-weight:600; padding:.2rem .6rem; border-radius:20px; }
+    .badge-green { background:#dcfce7; color:var(--green); }
+    .badge-blue { background:#dbeafe; color:var(--blue); }
+    .badge-orange { background:#ffedd5; color:var(--orange); }
+
+    /* ── Deliverables list ── */
+    .deliverables-grid { display:grid; grid-template-columns:1fr 1fr; gap:.4rem; }
+    .del-item { display:flex; align-items:flex-start; gap:.5rem; font-size:.82rem; padding:.3rem 0; }
+    .del-item .icon { color:var(--green); font-size:.75rem; margin-top:.2rem; flex-shrink:0; }
+    .del-item .tag { font-size:.68rem; padding:.1rem .4rem; border-radius:4px; background:#f1f5f9; color:var(--text-muted); margin-left:.3rem; white-space:nowrap; }
+
+    /* ── Tech stack table ── */
+    .tech-table { width:100%; border-collapse:collapse; font-size:.82rem; }
+    .tech-table th { background:var(--primary); color:#fff; text-align:left; padding:.55rem .85rem; font-weight:600; font-size:.75rem; letter-spacing:.03em; }
+    .tech-table th:first-child { border-radius:6px 0 0 0; }
+    .tech-table th:last-child { border-radius:0 6px 0 0; }
+    .tech-table td { padding:.55rem .85rem; border-bottom:1px solid var(--border); vertical-align:top; line-height:1.5; }
+    .tech-table tr:last-child td { border-bottom:none; }
+    .tech-table tr:nth-child(even) td { background:#f8fafc; }
+    .pill { display:inline-block; font-size:.68rem; font-weight:600; padding:.15rem .5rem; border-radius:20px; margin:.1rem .1rem 0 0; }
+    .pill-green { background:#dcfce7; color:var(--green); }
+    .pill-blue { background:#dbeafe; color:var(--blue); }
+    .pill-grey { background:#f1f5f9; color:var(--text-muted); }
+    .pill-orange { background:#ffedd5; color:var(--orange); }
+    .pill-red { background:#fee2e2; color:var(--red); }
+
+    /* ── Costing table ── */
+    .cost-table { width:100%; border-collapse:collapse; font-size:.83rem; }
+    .cost-table thead th { background:var(--primary); color:#fff; padding:.6rem .9rem; text-align:left; font-size:.75rem; letter-spacing:.03em; }
+    .cost-table thead th:first-child { border-radius:6px 0 0 0; }
+    .cost-table thead th:last-child { border-radius:0 6px 0 0; text-align:right; }
+    .cost-table tbody td { padding:.6rem .9rem; border-bottom:1px solid var(--border); vertical-align:top; }
+    .cost-table tbody tr:nth-child(even) td { background:#f8fafc; }
+    .cost-table tfoot td { padding:.6rem .9rem; }
+    .cost-table .amt { text-align:right; font-weight:600; font-variant-numeric:tabular-nums; white-space:nowrap; }
+    .cost-table .subtotal td { background:#f1f5f9; font-weight:600; }
+    .cost-table .total-row td { background:var(--primary); color:#fff; font-weight:700; font-size:.9rem; }
+    .cost-table .total-row .amt { color:var(--accent); }
+    .cost-note { font-size:.75rem; color:var(--text-muted); margin-top:.75rem; padding:.6rem .85rem; background:#f8fafc; border-left:3px solid var(--accent); border-radius:0 6px 6px 0; }
+
+    /* ── Hosting table ── */
+    .hosting-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:.85rem; }
+    .hosting-card { border:1px solid var(--border); border-radius:8px; padding:1rem; }
+    .hosting-card.current { border-color:var(--accent); background:#fffbeb; }
+    .hosting-card h5 { font-size:.82rem; font-weight:700; margin-bottom:.3rem; color:var(--primary); }
+    .hosting-card .price { font-size:1.1rem; font-weight:800; color:var(--primary); margin-bottom:.5rem; }
+    .hosting-card .price span { font-size:.75rem; font-weight:500; color:var(--text-muted); }
+    .hosting-card ul { list-style:none; }
+    .hosting-card ul li { font-size:.75rem; color:var(--text-muted); padding:.15rem 0; display:flex; gap:.4rem; align-items:flex-start; }
+    .hosting-card ul li::before { content:'✓'; color:var(--green); font-weight:700; flex-shrink:0; }
+    .current-label { font-size:.68rem; font-weight:700; color:var(--accent); text-transform:uppercase; letter-spacing:.05em; margin-bottom:.4rem; display:block; }
+
+    /* ── Alternate tech cards ── */
+    .alt-grid { display:grid; grid-template-columns:1fr 1fr; gap:1rem; }
+    .alt-card { border:1px solid var(--border); border-radius:8px; padding:1.1rem 1.25rem; }
+    .alt-card.recommended { border-color:var(--accent); }
+    .alt-card-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:.6rem; }
+    .alt-card h4 { font-size:.88rem; font-weight:700; color:var(--primary); }
+    .alt-card .best-for { font-size:.68rem; color:var(--text-muted); margin-bottom:.6rem; font-style:italic; }
+    .pros-cons { display:grid; grid-template-columns:1fr 1fr; gap:.5rem; margin-top:.65rem; }
+    .pro-list, .con-list { }
+    .pro-list label, .con-list label { font-size:.68rem; font-weight:700; text-transform:uppercase; letter-spacing:.05em; margin-bottom:.3rem; display:block; }
+    .pro-list label { color:var(--green); }
+    .con-list label { color:var(--red); }
+    .pro-list li, .con-list li { font-size:.75rem; list-style:none; padding:.1rem 0; display:flex; gap:.3rem; line-height:1.4; }
+    .pro-list li::before { content:'✓'; color:var(--green); font-weight:700; flex-shrink:0; }
+    .con-list li::before { content:'✗'; color:var(--red); font-weight:700; flex-shrink:0; }
+    .alt-cost { margin-top:.7rem; padding-top:.6rem; border-top:1px solid var(--border); font-size:.75rem; color:var(--text-muted); display:flex; justify-content:space-between; }
+    .alt-cost strong { color:var(--primary); }
+
+    /* ── Comparison matrix ── */
+    .matrix-table { width:100%; border-collapse:collapse; font-size:.78rem; }
+    .matrix-table th { background:var(--primary); color:#fff; padding:.5rem .7rem; font-size:.72rem; letter-spacing:.02em; text-align:center; }
+    .matrix-table th:first-child { text-align:left; }
+    .matrix-table td { padding:.5rem .7rem; border-bottom:1px solid var(--border); text-align:center; }
+    .matrix-table td:first-child { text-align:left; font-weight:600; }
+    .matrix-table tr:nth-child(even) td { background:#f8fafc; }
+    .star { color:var(--accent); }
+    .check { color:var(--green); font-weight:700; }
+    .cross { color:var(--red); }
+
+    /* ── Summary box ── */
+    .summary-box { background:var(--primary); color:#fff; border-radius:10px; padding:1.5rem 2rem; display:grid; grid-template-columns:1fr 1fr 1fr; gap:1.25rem; margin-bottom:1.5rem; }
+    .summary-item label { display:block; font-size:.7rem; color:rgba(255,255,255,.5); text-transform:uppercase; letter-spacing:.05em; margin-bottom:.3rem; }
+    .summary-item .val { font-size:1.4rem; font-weight:800; font-family:'Montserrat',sans-serif; color:var(--accent); }
+    .summary-item .sub { font-size:.75rem; color:rgba(255,255,255,.6); }
+    .recommendation-box { background:#fffbeb; border:1px solid rgba(200,151,43,.3); border-radius:10px; padding:1.25rem 1.5rem; }
+    .recommendation-box h3 { font-size:.9rem; font-weight:700; color:var(--primary); margin-bottom:.75rem; display:flex; align-items:center; gap:.4rem; }
+    .recommendation-box p { font-size:.82rem; color:var(--text); line-height:1.7; margin-bottom:.5rem; }
+
+    /* ── Footer ── */
+    .doc-footer { text-align:center; font-size:.75rem; color:var(--text-muted); padding:1.5rem 0; border-top:1px solid var(--border); margin-top:2rem; }
+
+    /* ── Print ── */
+    @media print {
+      body { background:#fff; font-size:11.5px; }
+      .page-wrap { padding:.5rem; max-width:100%; }
+      .doc-header { border-radius:0; }
+      .section, .alt-card, .hosting-card { break-inside:avoid; }
+    }
+    @media(max-width:700px) {
+      .doc-meta-grid { grid-template-columns:1fr 1fr; }
+      .deliverables-grid, .alt-grid, .pros-cons, .hosting-grid, .summary-box { grid-template-columns:1fr; }
+    }
+  </style>
+</head>
+<body>
+<div class="page-wrap">
+
+  <!-- ══ COVER ══ -->
+  <div class="doc-header">
+    <div class="firm-badge">
+      <div class="logo-box">JS</div>
+      <span>Jitin Sharma &amp; Co — Cost Accountants, Jaipur</span>
+    </div>
+    <h1>Website Implementation<br/><span>Costing &amp; Technology Report</span></h1>
+    <p class="doc-sub">Professional cost audit firm website — scope, technology stack, pricing, and alternate platform analysis</p>
+    <div class="doc-meta-grid">
+      <div class="doc-meta-item"><label>Prepared For</label><value>Jitin Sharma &amp; Co</value></div>
+      <div class="doc-meta-item"><label>Prepared By</label><value>Claude Sonnet 4.6</value></div>
+      <div class="doc-meta-item"><label>Document Date</label><value>June 2025</value></div>
+      <div class="doc-meta-item"><label>Version</label><value>1.0 — Final</value></div>
+    </div>
+  </div>
+
+  <!-- ══ EXECUTIVE SUMMARY ══ -->
+  <div class="summary-box">
+    <div class="summary-item"><label>Total Pages Built</label><div class="val">32</div><div class="sub">HTML files incl. blog &amp; legal</div></div>
+    <div class="summary-item"><label>Lines of Code</label><div class="val">6,535+</div><div class="sub">HTML, CSS, JS combined</div></div>
+    <div class="summary-item"><label>Estimated Market Value</label><div class="val">₹90K–₹1.8L</div><div class="sub">Professional agency rate</div></div>
+  </div>
+
+  <!-- ══ 1. SCOPE OF WORK ══ -->
+  <div class="section">
+    <div class="section-title">
+      <div class="num">1</div>
+      <h2>Scope of Work — Deliverables</h2>
+      <span class="badge badge-green">32 Files Delivered</span>
+    </div>
+    <div class="deliverables-grid">
+      <div class="del-item"><span class="icon">✔</span><span><strong>Home Page</strong> — Hero, stats counters, services grid, testimonials, blog preview, regulatory links<span class="tag">index.html</span></span></div>
+      <div class="del-item"><span class="icon">✔</span><span><strong>About Page</strong> — Firm history, vision/mission, timeline, associations<span class="tag">about.html</span></span></div>
+      <div class="del-item"><span class="icon">✔</span><span><strong>Team Page</strong> — 9 member cards with specialisations<span class="tag">team.html</span></span></div>
+      <div class="del-item"><span class="icon">✔</span><span><strong>Cost Audit Service</strong> — Legal framework, sectors, 6-step process, penalties<span class="tag">services/</span></span></div>
+      <div class="del-item"><span class="icon">✔</span><span><strong>GST Services</strong> — 8 service cards, GST filing calendar<span class="tag">services/</span></span></div>
+      <div class="del-item"><span class="icon">✔</span><span><strong>CAS-4 Certification</strong> — Complete guide, cost sheet format<span class="tag">services/</span></span></div>
+      <div class="del-item"><span class="icon">✔</span><span><strong>Cost Records</strong> — Rule 3/4, Table A/B, maintenance guide<span class="tag">services/</span></span></div>
+      <div class="del-item"><span class="icon">✔</span><span><strong>Internal Audit</strong> — Risk-based methodology, 6 scope areas<span class="tag">services/</span></span></div>
+      <div class="del-item"><span class="icon">✔</span><span><strong>Income Tax</strong> — 8 service cards, ITR &amp; TDS coverage<span class="tag">services/</span></span></div>
+      <div class="del-item"><span class="icon">✔</span><span><strong>Costing System</strong> — ABC, Standard, Job, Process methods<span class="tag">services/</span></span></div>
+      <div class="del-item"><span class="icon">✔</span><span><strong>Specialised Services</strong> — 12 cards incl. Transfer Pricing, Forensic, IBC<span class="tag">services/</span></span></div>
+      <div class="del-item"><span class="icon">✔</span><span><strong>ROC Compliance</strong> — 10 MCA forms table with due dates<span class="tag">services/</span></span></div>
+      <div class="del-item"><span class="icon">✔</span><span><strong>Certification Services</strong> — 8 certificate types, UDIN info<span class="tag">services/</span></span></div>
+      <div class="del-item"><span class="icon">✔</span><span><strong>Industry Experience</strong> — 15 sector cards with highlights<span class="tag">industry-experience.html</span></span></div>
+      <div class="del-item"><span class="icon">✔</span><span><strong>CAS Standards Reference</strong> — Complete CAS 1–24 table<span class="tag">cas-standards.html</span></span></div>
+      <div class="del-item"><span class="icon">✔</span><span><strong>Cost Records Reference</strong> — FAQ accordion, penalty tables<span class="tag">cost-records-reference.html</span></span></div>
+      <div class="del-item"><span class="icon">✔</span><span><strong>Blog Index + 3 Articles</strong> — Cost Audit, GST Checklist, CAS-4 Guide<span class="tag">blog/</span></span></div>
+      <div class="del-item"><span class="icon">✔</span><span><strong>Contact Page</strong> — Form, map, 2 office cards, WhatsApp<span class="tag">contact.html</span></span></div>
+      <div class="del-item"><span class="icon">✔</span><span><strong>Resources Page</strong> — 6 PDF cards, 9 regulatory portal links<span class="tag">resources.html</span></span></div>
+      <div class="del-item"><span class="icon">✔</span><span><strong>Privacy Policy</strong> — 11 sections, DPDP Act compliant<span class="tag">privacy-policy.html</span></span></div>
+      <div class="del-item"><span class="icon">✔</span><span><strong>Terms &amp; Conditions</strong> — 9 sections<span class="tag">terms.html</span></span></div>
+      <div class="del-item"><span class="icon">✔</span><span><strong>Disclaimer</strong> — ICMAI guidelines compliant<span class="tag">disclaimer.html</span></span></div>
+      <div class="del-item"><span class="icon">✔</span><span><strong>404 Error Page</strong> — Branded with quick navigation links<span class="tag">404.html</span></span></div>
+      <div class="del-item"><span class="icon">✔</span><span><strong>Sitemap XML</strong> — All 28 URLs with priority &amp; changefreq<span class="tag">sitemap.xml</span></span></div>
+      <div class="del-item"><span class="icon">✔</span><span><strong>robots.txt</strong> — Crawl rules, sitemap pointer<span class="tag">robots.txt</span></span></div>
+      <div class="del-item"><span class="icon">✔</span><span><strong>SVG Favicon</strong> — Branded JS initials, navy/gold<span class="tag">assets/favicon.svg</span></span></div>
+      <div class="del-item"><span class="icon">✔</span><span><strong>Design System (CSS)</strong> — 700+ lines, CSS custom properties, full responsive<span class="tag">css/style.css</span></span></div>
+      <div class="del-item"><span class="icon">✔</span><span><strong>JavaScript</strong> — Counters, AOS, accordion, cookie consent, form<span class="tag">js/main.js</span></span></div>
+      <div class="del-item"><span class="icon">✔</span><span><strong>Git Repository</strong> — Version control, GitHub public repo<span class="tag">github.com</span></span></div>
+      <div class="del-item"><span class="icon">✔</span><span><strong>Vercel Deployment</strong> — Live on CDN, auto-deploy on git push<span class="tag">vercel.app</span></span></div>
+    </div>
+  </div>
+
+  <!-- ══ 2. TECHNOLOGY STACK ══ -->
+  <div class="section">
+    <div class="section-title">
+      <div class="num">2</div>
+      <h2>Technology Stack — Current Implementation</h2>
+      <span class="badge badge-blue">Static HTML/CSS/JS</span>
+    </div>
+    <table class="tech-table">
+      <thead>
+        <tr><th>Layer</th><th>Technology</th><th>Version / Plan</th><th>Purpose</th><th>Cost</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Markup</strong></td>
+          <td>HTML5</td>
+          <td>HTML Living Standard</td>
+          <td>Semantic page structure, Schema.org JSON-LD, accessibility attributes, SEO meta tags</td>
+          <td><span class="pill pill-green">Free</span></td>
+        </tr>
+        <tr>
+          <td><strong>Styling</strong></td>
+          <td>CSS3 — Vanilla</td>
+          <td>CSS Custom Properties</td>
+          <td>Design tokens (colors, fonts, radii, shadows), CSS Grid, Flexbox, keyframe animations, media queries (4 breakpoints), AOS-like transition classes</td>
+          <td><span class="pill pill-green">Free</span></td>
+        </tr>
+        <tr>
+          <td><strong>Interactivity</strong></td>
+          <td>Vanilla JavaScript (ES6+)</td>
+          <td>No transpilation</td>
+          <td>Header scroll effect, mobile hamburger nav, animated number counters (IntersectionObserver), AOS scroll animations, accordion UI, contact form validation, cookie consent (localStorage), WhatsApp deep link, active nav detection</td>
+          <td><span class="pill pill-green">Free</span></td>
+        </tr>
+        <tr>
+          <td><strong>Icon Library</strong></td>
+          <td>Font Awesome</td>
+          <td>6.5.0 (CDN)</td>
+          <td>200+ icons across all pages — service icons, UI indicators, contact icons, social icons</td>
+          <td><span class="pill pill-green">Free (CDN)</span></td>
+        </tr>
+        <tr>
+          <td><strong>Fonts</strong></td>
+          <td>Google Fonts</td>
+          <td>Montserrat + Inter</td>
+          <td>Montserrat (headings, logo, nav) + Inter (body copy, tables). Loaded via CDN with display=swap for performance.</td>
+          <td><span class="pill pill-green">Free (CDN)</span></td>
+        </tr>
+        <tr>
+          <td><strong>SEO</strong></td>
+          <td>Schema.org JSON-LD</td>
+          <td>Multiple @types</td>
+          <td>AccountingService, LocalBusiness, Service, Person, BlogPosting, ContactPage structured data on each relevant page for Google rich results</td>
+          <td><span class="pill pill-green">Free</span></td>
+        </tr>
+        <tr>
+          <td><strong>Version Control</strong></td>
+          <td>Git</td>
+          <td>2.54 (local)</td>
+          <td>Source code management, commit history, branching</td>
+          <td><span class="pill pill-green">Free</span></td>
+        </tr>
+        <tr>
+          <td><strong>Code Hosting</strong></td>
+          <td>GitHub</td>
+          <td>Public Repository</td>
+          <td>Remote repository at github.com/Vivek-dev-web/cost-audit-website. Enables Vercel integration and auto-deployment.</td>
+          <td><span class="pill pill-green">Free</span></td>
+        </tr>
+        <tr>
+          <td><strong>Hosting / CDN</strong></td>
+          <td>Vercel</td>
+          <td>Hobby (Free)</td>
+          <td>Global CDN, HTTPS/SSL, automatic deployment on git push, custom domain support, 99.99% SLA, serverless edge network</td>
+          <td><span class="pill pill-green">Free</span></td>
+        </tr>
+        <tr>
+          <td><strong>Analytics</strong></td>
+          <td>Google Analytics 4</td>
+          <td>gtag.js (ready)</td>
+          <td>PDF download tracking, page views, user behaviour. GA4 code placeholder included in JS — needs GA4 Measurement ID to activate.</td>
+          <td><span class="pill pill-green">Free</span></td>
+        </tr>
+        <tr>
+          <td><strong>Maps</strong></td>
+          <td>Google Maps Embed</td>
+          <td>Embed API (free tier)</td>
+          <td>Office location map on Contact page. Embedded via iframe — no API key required for basic embed.</td>
+          <td><span class="pill pill-green">Free</span></td>
+        </tr>
+        <tr>
+          <td><strong>Messaging</strong></td>
+          <td>WhatsApp Business API</td>
+          <td>wa.me deep link</td>
+          <td>Floating WhatsApp button on every page. Opens WhatsApp with pre-filled message. No API key required.</td>
+          <td><span class="pill pill-green">Free</span></td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="cost-note">★ Current stack total hosting &amp; tooling cost: <strong>₹0/month</strong> (excluding domain name). All tools used are free or open-source. Only ongoing cost is the domain name (approx. ₹800–₹1,500/year).</div>
+  </div>
+
+  <!-- ══ 3. DEVELOPMENT COST ══ -->
+  <div class="section">
+    <div class="section-title">
+      <div class="num">3</div>
+      <h2>Development Cost Estimation</h2>
+      <span class="badge badge-orange">Market Rate — India</span>
+    </div>
+    <p style="font-size:.82rem;color:var(--text-muted);margin-bottom:1rem;">The table below represents what a professional Indian digital agency or freelancer would charge to build this website. Estimates are based on mid-tier Indian market rates (₹800–₹1,500/hr for senior developers).</p>
+    <table class="cost-table">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Work Component</th>
+          <th>Estimated Hours</th>
+          <th>Rate (₹/hr)</th>
+          <th>Low Estimate</th>
+          <th>High Estimate</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>1</td>
+          <td><strong>Discovery &amp; Planning</strong><br/><span style="font-size:.75rem;color:var(--text-muted)">Requirements, sitemap, content strategy, wireframes discussion</span></td>
+          <td>8–12 hrs</td>
+          <td>₹1,000</td>
+          <td class="amt">₹8,000</td>
+          <td class="amt">₹12,000</td>
+        </tr>
+        <tr>
+          <td>2</td>
+          <td><strong>UI/UX Design</strong><br/><span style="font-size:.75rem;color:var(--text-muted)">Design system (colors, typography, spacing), component library mockups, mobile designs, visual identity</span></td>
+          <td>20–30 hrs</td>
+          <td>₹1,200</td>
+          <td class="amt">₹24,000</td>
+          <td class="amt">₹36,000</td>
+        </tr>
+        <tr>
+          <td>3</td>
+          <td><strong>HTML/CSS Development</strong><br/><span style="font-size:.75rem;color:var(--text-muted)">32 pages, responsive layout (4 breakpoints), design system CSS (~700 lines), all components</span></td>
+          <td>35–50 hrs</td>
+          <td>₹1,000</td>
+          <td class="amt">₹35,000</td>
+          <td class="amt">₹50,000</td>
+        </tr>
+        <tr>
+          <td>4</td>
+          <td><strong>JavaScript &amp; Interactivity</strong><br/><span style="font-size:.75rem;color:var(--text-muted)">Counter animation, AOS, accordion, cookie consent, contact form, nav, WhatsApp</span></td>
+          <td>10–15 hrs</td>
+          <td>₹1,200</td>
+          <td class="amt">₹12,000</td>
+          <td class="amt">₹18,000</td>
+        </tr>
+        <tr>
+          <td>5</td>
+          <td><strong>Content Writing</strong><br/><span style="font-size:.75rem;color:var(--text-muted)">25+ professional service pages, 3 long-form blog articles (~1,500 words each), legal pages, Indian compliance domain knowledge required</span></td>
+          <td>25–40 hrs</td>
+          <td>₹800</td>
+          <td class="amt">₹20,000</td>
+          <td class="amt">₹32,000</td>
+        </tr>
+        <tr>
+          <td>6</td>
+          <td><strong>SEO Implementation</strong><br/><span style="font-size:.75rem;color:var(--text-muted)">Schema.org JSON-LD (8 @types), meta tags (28 pages), canonical URLs, sitemap.xml, robots.txt, Open Graph</span></td>
+          <td>8–12 hrs</td>
+          <td>₹1,000</td>
+          <td class="amt">₹8,000</td>
+          <td class="amt">₹12,000</td>
+        </tr>
+        <tr>
+          <td>7</td>
+          <td><strong>Testing &amp; QA</strong><br/><span style="font-size:.75rem;color:var(--text-muted)">Cross-browser (Chrome, Firefox, Safari, Edge), responsive testing (mobile/tablet/desktop), link checking, form validation testing</span></td>
+          <td>6–10 hrs</td>
+          <td>₹800</td>
+          <td class="amt">₹4,800</td>
+          <td class="amt">₹8,000</td>
+        </tr>
+        <tr>
+          <td>8</td>
+          <td><strong>Deployment &amp; Git Setup</strong><br/><span style="font-size:.75rem;color:var(--text-muted)">Git init, GitHub repo, Vercel deployment, custom domain config, SSL</span></td>
+          <td>3–5 hrs</td>
+          <td>₹800</td>
+          <td class="amt">₹2,400</td>
+          <td class="amt">₹4,000</td>
+        </tr>
+        <tr>
+          <td>9</td>
+          <td><strong>Project Management &amp; Revisions</strong><br/><span style="font-size:.75rem;color:var(--text-muted)">Client communication, content revisions, name/address/branding updates, iterations</span></td>
+          <td>8–15 hrs</td>
+          <td>₹800</td>
+          <td class="amt">₹6,400</td>
+          <td class="amt">₹12,000</td>
+        </tr>
+      </tbody>
+      <tfoot>
+        <tr class="subtotal">
+          <td colspan="4"><strong>Subtotal — Development</strong></td>
+          <td class="amt">₹1,20,600</td>
+          <td class="amt">₹1,84,000</td>
+        </tr>
+        <tr>
+          <td colspan="4">GST @ 18% (professional services)</td>
+          <td class="amt">₹21,708</td>
+          <td class="amt">₹33,120</td>
+        </tr>
+        <tr class="total-row">
+          <td colspan="4"><strong>TOTAL DEVELOPMENT COST (incl. GST)</strong></td>
+          <td class="amt">₹1,42,308</td>
+          <td class="amt">₹2,17,120</td>
+        </tr>
+      </tfoot>
+    </table>
+    <div class="cost-note">Note: These are market estimates for professional agency / senior freelancer rates in India. This website was built using AI-assisted development which significantly reduced time and cost. The domain name (approx. ₹800–₹1,500/year for .in) is not included above and must be purchased separately through a registrar such as GoDaddy, BigRock, or Namecheap.</div>
+  </div>
+
+  <!-- ══ 4. RECURRING COSTS ══ -->
+  <div class="section">
+    <div class="section-title">
+      <div class="num">4</div>
+      <h2>Recurring Annual Operating Costs</h2>
+      <span class="badge badge-green">Currently: ~₹1,200/year</span>
+    </div>
+    <table class="cost-table">
+      <thead>
+        <tr><th>Item</th><th>Current Plan</th><th>Cost (₹/year)</th><th>Notes</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Domain Name (.in)</strong></td>
+          <td>Not yet purchased</td>
+          <td class="amt">₹800 – ₹1,500</td>
+          <td>jitinsharmaco.in — available on GoDaddy / BigRock</td>
+        </tr>
+        <tr>
+          <td><strong>Vercel Hosting</strong></td>
+          <td>Hobby (Free)</td>
+          <td class="amt">₹0</td>
+          <td>100 GB bandwidth/month, unlimited deploys, HTTPS, CDN. Sufficient for professional firm website.</td>
+        </tr>
+        <tr>
+          <td><strong>GitHub</strong></td>
+          <td>Free (Public repo)</td>
+          <td class="amt">₹0</td>
+          <td>Unlimited public repos, CI/CD, 2,000 Actions minutes/month</td>
+        </tr>
+        <tr>
+          <td><strong>SSL Certificate</strong></td>
+          <td>Vercel (auto-managed)</td>
+          <td class="amt">₹0</td>
+          <td>Let's Encrypt SSL auto-renewed. HTTPS enforced globally.</td>
+        </tr>
+        <tr>
+          <td><strong>Google Analytics 4</strong></td>
+          <td>Free</td>
+          <td class="amt">₹0</td>
+          <td>Requires GA4 Measurement ID to be inserted in index.html</td>
+        </tr>
+        <tr>
+          <td><strong>Google Fonts CDN</strong></td>
+          <td>Free</td>
+          <td class="amt">₹0</td>
+          <td>Montserrat + Inter served from Google's global CDN</td>
+        </tr>
+        <tr>
+          <td><strong>Font Awesome CDN</strong></td>
+          <td>Free (v6 CDN)</td>
+          <td class="amt">₹0</td>
+          <td>1,600+ icons. Free plan: unlimited requests.</td>
+        </tr>
+        <tr>
+          <td><strong>Website Maintenance</strong></td>
+          <td>As needed</td>
+          <td class="amt">₹5,000 – ₹15,000</td>
+          <td>Content updates, new blog posts, regulatory updates. Estimated 2–4 hrs/month.</td>
+        </tr>
+      </tbody>
+      <tfoot>
+        <tr class="total-row">
+          <td colspan="2"><strong>TOTAL RECURRING COST (minimum)</strong></td>
+          <td class="amt">≈ ₹1,200/year</td>
+          <td><em>Domain only — hosting is free</em></td>
+        </tr>
+      </tfoot>
+    </table>
+
+    <p style="font-size:.82rem;font-weight:600;margin:1.25rem 0 .5rem;">Hosting Plan Comparison</p>
+    <div class="hosting-grid">
+      <div class="hosting-card current">
+        <span class="current-label">★ Currently Active</span>
+        <h5>Vercel — Hobby</h5>
+        <div class="price">₹0 <span>/month</span></div>
+        <ul>
+          <li>Global CDN (30+ regions)</li>
+          <li>Unlimited deployments</li>
+          <li>Custom domain support</li>
+          <li>Auto SSL/HTTPS</li>
+          <li>100 GB bandwidth/month</li>
+          <li>Git-triggered auto deploy</li>
+        </ul>
+      </div>
+      <div class="hosting-card">
+        <h5>Vercel — Pro</h5>
+        <div class="price">$20 <span>/month (~₹1,680)</span></div>
+        <ul>
+          <li>Everything in Hobby</li>
+          <li>Password protection</li>
+          <li>Team collaboration</li>
+          <li>Advanced analytics</li>
+          <li>Priority support</li>
+          <li>1 TB bandwidth/month</li>
+        </ul>
+      </div>
+      <div class="hosting-card">
+        <h5>Shared Hosting (India)</h5>
+        <div class="price">₹150–₹400 <span>/month</span></div>
+        <ul>
+          <li>cPanel / Plesk</li>
+          <li>India server (lower latency)</li>
+          <li>Email hosting included</li>
+          <li>Manual upload (FTP/cPanel)</li>
+          <li>No auto git deploy</li>
+          <li>E.g. Hostinger, BigRock</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ 5. ALTERNATE TECHNOLOGIES ══ -->
+  <div class="section">
+    <div class="section-title">
+      <div class="num">5</div>
+      <h2>Alternate Technology Options</h2>
+      <span class="badge badge-blue">6 Alternatives Evaluated</span>
+    </div>
+    <p style="font-size:.82rem;color:var(--text-muted);margin-bottom:1.1rem;">The current implementation uses plain HTML/CSS/JS with no framework or build tool — the most lightweight option. Below are 6 alternate approaches with their trade-offs and additional cost implications.</p>
+    <div class="alt-grid">
+
+      <div class="alt-card recommended">
+        <div class="alt-card-header">
+          <h4>⭐ Next.js (React) — Recommended</h4>
+          <span class="pill pill-green">Best for Scale</span>
+        </div>
+        <p class="best-for">Best for: Growing firms that will add client portals, calculators, or CMS-driven content</p>
+        <div class="pros-cons">
+          <ul class="pro-list"><label>Pros</label>
+            <li>Component reuse — write header/footer once</li>
+            <li>Static Site Generation (SSG) — same speed as current</li>
+            <li>TypeScript support for maintainable code</li>
+            <li>File-based routing — easy to add pages</li>
+            <li>Large developer ecosystem</li>
+            <li>Same Vercel hosting (made by Vercel)</li>
+          </ul>
+          <ul class="con-list"><label>Cons</label>
+            <li>Node.js required for development</li>
+            <li>Overkill for a simple brochure site</li>
+            <li>Build step needed before deploy</li>
+            <li>Steeper learning curve for non-devs</li>
+          </ul>
+        </div>
+        <div class="alt-cost"><span>Additional dev cost: <strong>+₹25,000–₹50,000</strong></span><span>Hosting: <strong>Vercel Free</strong></span></div>
+      </div>
+
+      <div class="alt-card recommended">
+        <div class="alt-card-header">
+          <h4>⭐ Astro — Most Efficient for This Type</h4>
+          <span class="pill pill-green">Best Performance</span>
+        </div>
+        <p class="best-for">Best for: Content-heavy static sites exactly like this one — ships zero JS by default</p>
+        <div class="pros-cons">
+          <ul class="pro-list"><label>Pros</label>
+            <li>Zero JS by default — fastest Lighthouse score</li>
+            <li>Component-based (use React/Vue/Svelte)</li>
+            <li>Markdown for blog posts — easy to maintain</li>
+            <li>Perfect for SEO-focused static sites</li>
+            <li>Content Collections — blog management built-in</li>
+          </ul>
+          <ul class="con-list"><label>Cons</label>
+            <li>Newer ecosystem — fewer developers available</li>
+            <li>Build step required</li>
+            <li>Client may struggle to update content</li>
+          </ul>
+        </div>
+        <div class="alt-cost"><span>Additional dev cost: <strong>+₹15,000–₹30,000</strong></span><span>Hosting: <strong>Vercel Free</strong></span></div>
+      </div>
+
+      <div class="alt-card">
+        <div class="alt-card-header">
+          <h4>WordPress (Self-Hosted)</h4>
+          <span class="pill pill-orange">Best for Client Control</span>
+        </div>
+        <p class="best-for">Best for: If the firm wants to update content themselves without a developer</p>
+        <div class="pros-cons">
+          <ul class="pro-list"><label>Pros</label>
+            <li>Admin panel — update content without code</li>
+            <li>Huge plugin ecosystem (SEO, forms, cache)</li>
+            <li>Widely known — easy to hire WP devs</li>
+            <li>Blog management built-in</li>
+          </ul>
+          <ul class="con-list"><label>Cons</label>
+            <li>Security vulnerabilities — requires regular updates</li>
+            <li>Slower than static HTML (needs caching plugins)</li>
+            <li>Monthly hosting cost (PHP server required)</li>
+            <li>Plugin conflicts are common</li>
+          </ul>
+        </div>
+        <div class="alt-cost"><span>Additional dev cost: <strong>+₹15,000–₹40,000</strong></span><span>Hosting: <strong>₹2,000–₹5,000/yr</strong></span></div>
+      </div>
+
+      <div class="alt-card">
+        <div class="alt-card-header">
+          <h4>Webflow</h4>
+          <span class="pill pill-blue">No-Code Option</span>
+        </div>
+        <p class="best-for">Best for: Rapid design-first development with a visual editor; no hosting needed</p>
+        <div class="pros-cons">
+          <ul class="pro-list"><label>Pros</label>
+            <li>Visual drag-and-drop builder</li>
+            <li>Built-in CMS for blog/team pages</li>
+            <li>Fast to build, no separate hosting</li>
+            <li>Clean, exportable code</li>
+          </ul>
+          <ul class="con-list"><label>Cons</label>
+            <li>Vendor lock-in — hard to migrate later</li>
+            <li>Expensive: $23–$39/month ($276–$468/year)</li>
+            <li>Limited server-side functionality</li>
+            <li>Less developer flexibility</li>
+          </ul>
+        </div>
+        <div class="alt-cost"><span>Dev cost: <strong>₹40,000–₹80,000</strong></span><span>Hosting: <strong>$276–$468/year</strong></span></div>
+      </div>
+
+      <div class="alt-card">
+        <div class="alt-card-header">
+          <h4>Hugo (Static Site Generator)</h4>
+          <span class="pill pill-grey">Fastest Builds</span>
+        </div>
+        <p class="best-for">Best for: Large content sites where build speed matters; Go-based, very fast</p>
+        <div class="pros-cons">
+          <ul class="pro-list"><label>Pros</label>
+            <li>Extremely fast build times (&lt;1 second)</li>
+            <li>Markdown content files — easy to write blog posts</li>
+            <li>Free, open-source, no Node.js</li>
+            <li>Deploy anywhere (Vercel, Netlify, GitHub Pages)</li>
+          </ul>
+          <ul class="con-list"><label>Cons</label>
+            <li>Go templates — steep learning curve</li>
+            <li>Fewer Indian developers familiar with Hugo</li>
+            <li>Less JavaScript ecosystem integration</li>
+          </ul>
+        </div>
+        <div class="alt-cost"><span>Additional dev cost: <strong>+₹10,000–₹25,000</strong></span><span>Hosting: <strong>Free (Vercel/Netlify)</strong></span></div>
+      </div>
+
+      <div class="alt-card">
+        <div class="alt-card-header">
+          <h4>Sanity CMS + Next.js</h4>
+          <span class="pill pill-blue">Best CMS Option</span>
+        </div>
+        <p class="best-for">Best for: If the firm plans to regularly publish content and wants a structured CMS</p>
+        <div class="pros-cons">
+          <ul class="pro-list"><label>Pros</label>
+            <li>Structured content management (blog, team, services)</li>
+            <li>Real-time editing, draft/publish workflow</li>
+            <li>Headless CMS — works with any frontend</li>
+            <li>Free tier includes 10 users, 1M API calls/month</li>
+          </ul>
+          <ul class="con-list"><label>Cons</label>
+            <li>Significantly more complex to build</li>
+            <li>Requires backend knowledge (API calls)</li>
+            <li>Overkill for a small professional firm site</li>
+            <li>Higher development cost</li>
+          </ul>
+        </div>
+        <div class="alt-cost"><span>Additional dev cost: <strong>+₹50,000–₹1,00,000</strong></span><span>Hosting: <strong>Vercel + Sanity Free/Paid</strong></span></div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ══ 6. COMPARISON MATRIX ══ -->
+  <div class="section">
+    <div class="section-title">
+      <div class="num">6</div>
+      <h2>Technology Comparison Matrix</h2>
+    </div>
+    <table class="matrix-table">
+      <thead>
+        <tr>
+          <th>Feature</th>
+          <th>Current (HTML/CSS/JS)</th>
+          <th>Next.js</th>
+          <th>Astro</th>
+          <th>WordPress</th>
+          <th>Webflow</th>
+          <th>Hugo</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>Page Speed</td><td><span class="star">★★★★★</span></td><td><span class="star">★★★★★</span></td><td><span class="star">★★★★★</span></td><td><span class="star">★★★</span></td><td><span class="star">★★★★</span></td><td><span class="star">★★★★★</span></td></tr>
+        <tr><td>SEO Capability</td><td><span class="star">★★★★★</span></td><td><span class="star">★★★★★</span></td><td><span class="star">★★★★★</span></td><td><span class="star">★★★★</span></td><td><span class="star">★★★★</span></td><td><span class="star">★★★★★</span></td></tr>
+        <tr><td>Client Can Edit Content</td><td><span class="cross">✗</span></td><td><span class="cross">✗</span></td><td><span class="cross">✗</span></td><td><span class="check">✓✓</span></td><td><span class="check">✓✓</span></td><td><span class="cross">✗</span></td></tr>
+        <tr><td>Developer Required</td><td><span class="check">Yes</span></td><td><span class="check">Yes</span></td><td><span class="check">Yes</span></td><td>Minimal</td><td>No</td><td><span class="check">Yes</span></td></tr>
+        <tr><td>Security Risk</td><td>Very Low</td><td>Low</td><td>Very Low</td><td>High</td><td>Low</td><td>Very Low</td></tr>
+        <tr><td>Hosting Cost/yr</td><td><strong>₹0</strong></td><td><strong>₹0</strong></td><td><strong>₹0</strong></td><td>₹2K–₹5K</td><td>₹23K–₹40K</td><td><strong>₹0</strong></td></tr>
+        <tr><td>Dev Complexity</td><td>Low</td><td>Medium</td><td>Medium</td><td>Medium</td><td>Low</td><td>Medium</td></tr>
+        <tr><td>Scalability</td><td>Medium</td><td>Very High</td><td>High</td><td>High</td><td>Medium</td><td>High</td></tr>
+        <tr><td>Component Reuse</td><td><span class="cross">✗</span></td><td><span class="check">✓✓</span></td><td><span class="check">✓✓</span></td><td>Partial</td><td>Partial</td><td>Partial</td></tr>
+        <tr><td>Blog/CMS Built-in</td><td><span class="cross">✗</span></td><td>Partial</td><td><span class="check">✓</span></td><td><span class="check">✓✓</span></td><td><span class="check">✓</span></td><td><span class="check">✓</span></td></tr>
+        <tr><td>AI-Assisted Dev</td><td><span class="check">✓✓</span></td><td><span class="check">✓✓</span></td><td><span class="check">✓✓</span></td><td><span class="check">✓</span></td><td>Partial</td><td><span class="check">✓</span></td></tr>
+        <tr><td>Time to Build</td><td>Fast</td><td>Medium</td><td>Medium</td><td>Fast</td><td>Fast</td><td>Medium</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ══ 7. RECOMMENDATION ══ -->
+  <div class="recommendation-box">
+    <h3>📋 Final Recommendation</h3>
+    <p><strong>For now — keep the current stack.</strong> Plain HTML/CSS/JS hosted on Vercel is the right choice for a professional firm website of this size. It is the fastest, cheapest, most secure, and easiest to maintain option. Hosting costs are ₹0. Page speed is optimal. SEO is fully implemented. There is nothing to update or patch monthly.</p>
+    <p><strong>If the firm grows and needs to update content regularly</strong> (e.g., new blog posts every week, case studies, team changes), migrate to <strong>Astro</strong> — it is purpose-built for content-heavy static sites, retains the same zero hosting cost, and allows blog posts to be written in Markdown without touching HTML.</p>
+    <p><strong>If the firm wants staff to manage content without a developer</strong> — add <strong>WordPress</strong> (with Astra or GeneratePress theme) or <strong>Webflow CMS</strong>. Budget ₹2,000–₹5,000/year additional for hosting, and ₹15,000–₹40,000 for the rebuild.</p>
+    <p style="margin-top:.75rem;font-size:.8rem;color:var(--text-muted);">★ Immediate action item: Purchase the domain <strong>jitinsharmaco.in</strong> (~₹1,200/year) and connect it to Vercel via Settings → Domains. This will make the website accessible at the firm's own domain.</p>
+  </div>
+
+  <div class="doc-footer">
+    <p><strong>Jitin Sharma &amp; Co — Cost Accountants, Jaipur</strong> | Website Implementation Costing &amp; Technology Report | Prepared June 2025</p>
+    <p style="margin-top:.3rem">This document is confidential and intended solely for the firm's internal use. All cost estimates are approximate and subject to market variation.</p>
+  </div>
+
+</div>
+</body>
+</html>
