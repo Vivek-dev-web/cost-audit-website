@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
   <rect width="64" height="64" rx="10" fill="#0b1f4b"/>
-  <text x="32" y="26" font-family="Georgia, 'Times New Roman', serif" font-size="18" font-weight="bold" fill="#c8972b" text-anchor="middle" dominant-baseline="middle">M&amp;A</text>
+  <text x="32" y="26" font-family="Georgia, 'Times New Roman', serif" font-size="18" font-weight="bold" fill="#c8972b" text-anchor="middle" dominant-baseline="middle">JS</text>
   <rect x="12" y="36" width="40" height="2" fill="#c8972b" opacity="0.6"/>
   <text x="32" y="48" font-family="Arial, sans-serif" font-size="7" fill="#a0b0cc" text-anchor="middle" dominant-baseline="middle" letter-spacing="1">COST AUDIT</text>
 </svg>
